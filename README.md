@@ -8,7 +8,7 @@ Spinnaker Production Setup
 # Table of Contents
  1. [Halyard Setup](#hal-setup)
  2. [Spinnaker Base Setup with basic concepts (Webhook Setup, Component Sizing)](#spin-setup)
- 3. Add Kubernetes Provider(Kubernetes Cluster)
+ 3. [Enable Kubernetes Provider(Kubernetes Cluster)](#spin-kube)
  4. Docker Registry Account Addition to Spinnaker
  5. Gitlab Account Addition to Spinnaker  
  6. Jenkins Account Addition to Spinnaker  
@@ -49,7 +49,27 @@ Spinnaker Production Setup
    - List current halyard config file and validate version(on-top)
             
             hal config list
+ 
+ ### Enable Kubernetes Provider(Enable kubernetes cluster accounts) <a name="spin-kube"></a>
+    
+   - Prerequisite 
+           
+       - Create kubeconfig file for specific cluster with --admin and move it intto .hal folder(/home/<your-user>/.hal/)
+       - For Example I am creating kubeconfig file with --admin
+               
+                az login(authenticate with user)
+                az aks get-credentials -n <kubernetes-cluster-name> -g <cluster-resource-group-name> --admin
+                
+      **Note :-** <br/>
+         1) Move already present config file(/home/<your-user>/.kube/config) at some location before above command<br/>
+         2) Then execute above command, you will see newly generated file. <br/>
+         3) Move file(config) to .hal folder(/home/<your-user>/.hal/). Move back your backed-up config file to same location.<br/>
+        
+   - Enable Kubernetes Provider support 
             
+            hal config provider kubernetes enable
+   - 
+ 
  ### Distribute Spinnaker deployment <a name="spin-distributed"></a>
    Changing deployment type to distributed i.e.Deploying Spinnaker with one server group per microservice, and a single shared Redis   
 
