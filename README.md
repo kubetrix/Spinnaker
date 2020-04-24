@@ -7,11 +7,17 @@ Spinnaker Production Setup
     - 
 # Topics
     1) Halyard Setup
+    
   **2) Spinnaker Base Setup with basic configuration understanding(Webhook Setup, Component Sizing)**
+  
   **3) Add Kubernetes Provider(Kubernetes Cluster)**
+  
   **4) Docker Registry Account Addition to Spinnaker**
+  
   **5) Gitlab Account Addition to Spinnaker**
+  
   **6) Jenkins Account Addition to Spinnaker**
+  
     7) Add Storage Account to Spinnaker for Pipeline configuration
     8) Enable Artifact Support
     9) Enable slack notification channel
