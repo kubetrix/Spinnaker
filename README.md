@@ -1,10 +1,13 @@
 # Spinnaker
-Spinnaker Production Setup
+Spinnaker is an open-source continuous delivery platform for releasing software changes with high velocity and confidence. Through a powerful abstraction layer, Spinnaker provides compelling tooling that empowers developers to own their application code from commit to delivery. As the most mature and widely productionalized continuous delivery platform, Spinnaker can apply the expertise of Netflix, Google, Microsoft, and Amazon to your SDLC. User companies include Target, Salesforce, Airbnb, Cerner, Adobe, and JPMorgan Chase.
 
-# Prerequisite
-    - Halyard
-    - Linux console or Git-Bash
-    - 
+Manage your SDLC in Spinnaker using the GUI (graphical user interface), or config-as-code. View, manage, and construct application workflows involving one or all of these resources:
+
+### Why Do I Need Spinnaker?
+With Spinnaker, create a “paved road” for application delivery, with guardrails that ensure only valid infrastructure and configuration reach production. Free development teams from burdensome ops provisioning while automating reinforcement of business and regulatory requirements. Delivery automation strategies such as canary deployments provide the safety necessary to capture value from quick innovation, while protecting against business and end-user impact
+
+This section describes how to install and set up Spinnaker so that it can be configured for use in production. 
+
 # Table of Contents
  1. [Halyard Setup](#hal-setup)
  2. [Spinnaker Base Setup with basic concepts (Webhook Setup, Component Sizing)](#spin-setup)
@@ -26,6 +29,10 @@ Spinnaker Production Setup
  16. [Spinnaker Deployment Type](#spin-distributed)
 
 ##  Halyard Setup <a name="hal-setup"></a>
+
+Halyard is a command-line administration tool that manages the lifecycle of your Spinnaker deployment, including writing & validating your deployment’s configuration, deploying each of Spinnaker’s microservices, and updating the deployment.
+
+All production-capable deployments of Spinnaker require Halyard in order to install, configure, and update Spinnaker.
 
    #### Download Halyard CLI
           curl -O https://raw.githubusercontent.com/spinnaker/halyard/master/install/debian/InstallHalyard.sh
