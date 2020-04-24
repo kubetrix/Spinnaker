@@ -68,7 +68,24 @@ Spinnaker Production Setup
    - Enable Kubernetes Provider support 
             
             hal config provider kubernetes enable
-   - 
+            
+   - Add Kubernetes account(clusters account for deployment)
+            
+            kubeconfig_path="<above-copied-kubeconfig-file-path>"(kubeconfig_path="/home/<your-user>/cluster-admin-kubeconfig-file")
+            hal config provider kubernetes account add <account-name> --provider-version <kubernetes-halyard-provider-version> \
+            --kubeconfig-file "$kubeconfig_path" \
+            --context $(kubectl config current-context --kubeconfig "$kubeconfig_path") \
+            --omit-namespaces=<namespace-name-for-ignore>
+    |Type|Description|
+    |-----|------|
+    |kubeconfig_path|Adding Path variable for passing the kubeconfig file for cluster|
+    |--provider|Halyard Kubernetes provider version(Current- v2)|
+    |--kubeconfig-file|Path for kubernetes file for pointing to cluster|
+    |-- omit-namespaces|Exclude namespaces which you dont want to include in spinnaker deployment|
+    
+**Note :-** <br/>
+      1) You can add multiple clusters for deployment from spinnaker (Target clusters) <br />
+      2) Add cluster config at the end in which you want to do spinnaker deployment, As it will take last added cluster as a spinnaker deployment
  
  ### Distribute Spinnaker deployment <a name="spin-distributed"></a>
    Changing deployment type to distributed i.e.Deploying Spinnaker with one server group per microservice, and a single shared Redis   
