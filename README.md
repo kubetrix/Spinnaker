@@ -27,9 +27,9 @@ Spinnaker Production Setup
 
 ##  Halyard Setup <a name="hal-setup"></a>
 
-    ####	Downloading Halyard CLI
+   ####	Downloading Halyard CLI
           curl -O https://raw.githubusercontent.com/spinnaker/halyard/master/install/debian/InstallHalyard.sh
-    #### Install it
+   #### Install it
           sudo bash InstallHalyard.sh --version 1.33.0-20200325200017
       
 | Type | Description |
