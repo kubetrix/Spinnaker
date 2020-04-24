@@ -11,7 +11,7 @@ Spinnaker Production Setup
  3. [Enable Kubernetes Provider(Kubernetes Cluster)](#spin-kube)
  4. [Docker Registry Account Addition to Spinnaker](#spin-docker-registry)
  5. [Gitlab Account Addition to Spinnaker for Pull and Push to Repo](#spin-gitlab)
- 6. [Jenkins Account Addition to Spinnaker](#c)
+ 6. [Jenkins Account Addition to Spinnaker](#spin-jenkins)
  7. Add Storage Account to Spinnaker for Pipeline configuration
  9. Enable slack notification channel
  10. Enable Helm Support
@@ -197,7 +197,7 @@ Spinnaker Production Setup
              Save and Execute Pipeline
                             
                 
- ### Enable Jenkins <a name="spin-jenkins"></a>
+ ### Enable Jenkins/Jenkins to Spinnaker build <a name="spin-jenkins"></a>
 
 This is required for viewning and managing Jenkins CI Master Configuration for Spinnaker
             
@@ -212,6 +212,7 @@ This is required for viewning and managing Jenkins CI Master Configuration for S
     |--password|Jenkins Password|
     |--csrf|Negotiate Jenkins Token|
 
+   
  
  ### Distribute Spinnaker deployment <a name="spin-distributed"></a>
    Changing deployment type to distributed i.e.Deploying Spinnaker with one server group per microservice, and a single shared Redis   
