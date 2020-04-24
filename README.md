@@ -10,10 +10,9 @@ Spinnaker Production Setup
  2. [Spinnaker Base Setup with basic concepts (Webhook Setup, Component Sizing)](#spin-setup)
  3. [Enable Kubernetes Provider(Kubernetes Cluster)](#spin-kube)
  4. [Docker Registry Account Addition to Spinnaker](#spin-docker-registry)
- 5. Gitlab Account Addition to Spinnaker  
+ 5. [Gitlab Account Addition to Spinnaker for Pull and Push to Repo](#spin-gitlab)
  6. Jenkins Account Addition to Spinnaker  
  7. Add Storage Account to Spinnaker for Pipeline configuration
- 8. Enable Artifact Support
  9. Enable slack notification channel
  10. Enable Helm Support
  11. Enable Canary Deployment
@@ -49,6 +48,10 @@ Spinnaker Production Setup
    - List current halyard config file and validate version(on-top)
             
             hal config list
+    
+   - Enable artifact support for storing all generated artifacts and use in different pipelines
+        
+            hal config features edit --artifacts true
  
  ### Enable Kubernetes Provider(Enable kubernetes cluster accounts) <a name="spin-kube"></a>
     
@@ -114,6 +117,87 @@ Spinnaker Production Setup
         |host-url| Docker Registry Host URL|
         |username|Docker Registry UserName|
         |password|Docker Registry Password/Token|
+ 
+ ### Generate Gitlab account with Pull and Push(#spin-gitlab)
+   - Considering you already have secured gitlab repo with 1 project
+   - Create Gitlab user PAT(Personal Access Token) for pulling the data from gitlab project
+        
+            - Go to Users(Right-Top) -> Setting -> Access Token(Left)
+            - Add token details
+         
+                name: token-name
+                expiry: set as per your need
+                access: Add(api, read_user, read_repository)
+         
+            - Then Create Personal Access Token(Copy the token as it will not be visible after refresh)
+            - This will give read access to repository
+         
+   - Add token to Spinnaker 
+        
+            hal config artifact gitlab enable
+            
+            hal config artifact gitlab account add <token-name>
+            
+            hal config artifact gitlab account edit <token-name> --token <copied-token>
+      
+      |Paramters|Description|
+      |------|-------|
+      |token-name| Created token for gitlab|
+      |--token | Generated PAT Token|
+      
+      Note: You can use it same token for writing as well with write access, but better not to provider token directly for writing to generic configuration. Configure it in pipeline steps.
+       
+   - Create Pipeline using Spinnaker for fetching data
+        - Create Spinnaker Application
+        - Create Pipeline
+        - Adding Configuration
+        
+                - Add Expected Artifacts
+                    - Go to gitlab and open one of the file in gitlab.
+                    - Copy RAW url(Open Raw from file top right)
+                        https://gitlab******/<user>/<repo>/raw/master/some-file
+                        
+                    - Change RAW url to API URL for API based access for artifacts download
+                        https://gitlab******/api/v4/projects/<user>%2F<repo>/repository/files/<some-file>
+                    
+                    - Now you can download <some-file> from gitlab to spinnaker
+                    - Bake the spinnaker artifact and use further
+                  
+        - Create Pipeline for pushing data(Continuing with same pipeline)            
+                
+             Generate repo Webhook token for pushing 
+                    
+                        - Go to Gitlab -> Project -> Settings -> Integration
+                        - Add API URL 
+                                https://gitlab******/api/v4/projects/<user>%2F<repo>/repository/commits
+                        - Paste Some random value for token and keep with you
+                        - Select Push Events and Enable SSL
+                        - Click on Add Webhook
+                        
+             Go To Spinnaker Pipeline
+                        
+                        - Add Webhook Pipeline
+                            Provide Webhook URL(Above one): https://gitlab******/api/v4/projects/<user>%2F<repo>/repository/commits
+                            method: POST
+                            Payload:
+                                    {
+                                      "actions": [
+                                        {
+                                          "action": "update",
+                                          "content": "${#fromBase64( #stage( 'Bake (Manifest)' )['outputs']['artifacts'][0]['reference']                                           ) }",
+                                          "file_path": "file-location"
+                                        }
+                                      ],
+                                      "branch": "master",
+                                      "commit_message": "Spinnaker commit"
+                                    }
+                            
+            
+                         'Bake (Manifest)' - Previous Pipeline Step where you generated artifacts
+                         
+     
+         - Execute Pipeline
+    
  
  ### Distribute Spinnaker deployment <a name="spin-distributed"></a>
    Changing deployment type to distributed i.e.Deploying Spinnaker with one server group per microservice, and a single shared Redis   
