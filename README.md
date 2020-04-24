@@ -6,7 +6,7 @@ Spinnaker Production Setup
     - Linux console or Git-Bash
     - 
 # Table of Contents
- 1. Halyard Setup(#hal-setup)
+ 1. [Halyard Setup](#hal-setup)
  2. Spinnaker Base Setup with basic configuration understanding(Webhook Setup, Component Sizing)
  3. Add Kubernetes Provider(Kubernetes Cluster)
  4. Docker Registry Account Addition to Spinnaker
@@ -27,7 +27,7 @@ Spinnaker Production Setup
 
 ##  Halyard Setup <a name="hal-setup"></a>
 
-   ####	Downloading Halyard CLI
+   #### Download Halyard CLI
           curl -O https://raw.githubusercontent.com/spinnaker/halyard/master/install/debian/InstallHalyard.sh
    #### Install it
           sudo bash InstallHalyard.sh --version 1.33.0-20200325200017
