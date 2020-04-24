@@ -9,7 +9,7 @@ Spinnaker Production Setup
  1. [Halyard Setup](#hal-setup)
  2. [Spinnaker Base Setup with basic concepts (Webhook Setup, Component Sizing)](#spin-setup)
  3. [Enable Kubernetes Provider(Kubernetes Cluster)](#spin-kube)
- 4. Docker Registry Account Addition to Spinnaker
+ 4. [Docker Registry Account Addition to Spinnaker](#spin-docker-registry)
  5. Gitlab Account Addition to Spinnaker  
  6. Jenkins Account Addition to Spinnaker  
  7. Add Storage Account to Spinnaker for Pipeline configuration
@@ -86,6 +86,32 @@ Spinnaker Production Setup
 **Note :-** <br/>
       1) You can add multiple clusters for deployment from spinnaker (Target clusters) <br />
       2) Add cluster config at the end in which you want to do spinnaker deployment, As it will take last added cluster as a spinnaker deployment
+      
+   
+   - Add docker-registry account for above created kubernetes account
+        (Before executing this step please create docker registry account using (#spin-docker-registry))
+        
+            hal config provider kubernetes account edit <spinnaker-kubernetes-account> --add-docker-registry <docker-registry-account-name> --live-manifest-calls true
+            
+        |Parameter|Description|
+        |---------|------------|
+        |--add-docker-registry|Add docker registry created in Azure/AWS/GCP|
+        |--live-manifest-calls|CloudDriver will validate execution with live data instead of cached data(default false)|
+        
+ 
+ ### Enable Docker Registry in Spinnaker <a name="spin-docker-registry"></a>
+ 
+   - Enable Docker Registry
+            
+         hal config provider docker-registry enable
+   - Add docker registry
+         
+         hal config provider docker-registry account add <account-name> --address <acr-host-url > --username <acr-username> --password INNC=<acr-password> --email <email-id>
+        
+        |Parameter|Description|
+        |----------|------------|
+        |<account-name>| Docker Registry Name|
+        |||
  
  ### Distribute Spinnaker deployment <a name="spin-distributed"></a>
    Changing deployment type to distributed i.e.Deploying Spinnaker with one server group per microservice, and a single shared Redis   
