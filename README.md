@@ -212,12 +212,12 @@ This is required for viewning and managing Jenkins CI Master Configuration for S
                 hal config ci jenkins enable
                 hal config ci jenkins master add jenkins --address <jenkins-url> --username <username> --password <password> --csrf true
  
-    |Parameters|Description|
-    |----------|-----------|
-    |--address|Jenkins URL|
-    |--username|Jenkins Username|
-    |--password|Jenkins Password|
-    |--csrf|Negotiate Jenkins Token|
+   |Parameters|Description|
+   |----------|-----------|
+   |--address|Jenkins URL|
+   |--username|Jenkins Username|
+   |--password|Jenkins Password|
+   |--csrf|Negotiate Jenkins Token|
 
    
  
