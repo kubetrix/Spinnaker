@@ -106,12 +106,14 @@ Spinnaker Production Setup
          hal config provider docker-registry enable
    - Add docker registry
          
-         hal config provider docker-registry account add <account-name> --address <acr-host-url > --username <acr-username> --password INNC=<acr-password> --email <email-id>
+         hal config provider docker-registry account add <account-name> --address <host-url > --username <username> --password INNC=<password> --email <email-id>
         
         |Parameter|Description|
         |----------|------------|
         |<account-name>| Docker Registry Name|
-        |||
+        |<host-url >| Docker Registry Host URL|
+        |<username>|Docker Registry UserName|
+        |<password>|Docker Registry Password/Token|
  
  ### Distribute Spinnaker deployment <a name="spin-distributed"></a>
    Changing deployment type to distributed i.e.Deploying Spinnaker with one server group per microservice, and a single shared Redis   
