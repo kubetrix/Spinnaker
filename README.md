@@ -110,10 +110,10 @@ Spinnaker Production Setup
         
         |Parameter|Description|
         |----------|------------|
-        |<account-name>| Docker Registry Name|
-        |<host-url >| Docker Registry Host URL|
-        |<username>|Docker Registry UserName|
-        |<password>|Docker Registry Password/Token|
+        |account-name| Docker Registry Name|
+        |host-url| Docker Registry Host URL|
+        |username|Docker Registry UserName|
+        |password|Docker Registry Password/Token|
  
  ### Distribute Spinnaker deployment <a name="spin-distributed"></a>
    Changing deployment type to distributed i.e.Deploying Spinnaker with one server group per microservice, and a single shared Redis   
