@@ -118,7 +118,7 @@ Spinnaker Production Setup
         |username|Docker Registry UserName|
         |password|Docker Registry Password/Token|
  
- ### Generate Gitlab account with Pull and Push <a name="spin-gitlab"></a>
+ ### Generate Gitlab account and Pull/Push some data <a name="spin-gitlab"></a>
    - Considering you already have secured gitlab repo with 1 project
    - Create Gitlab user PAT(Personal Access Token) for pulling the data from gitlab project
         
