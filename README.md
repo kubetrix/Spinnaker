@@ -76,12 +76,12 @@ Spinnaker Production Setup
             --kubeconfig-file "$kubeconfig_path" \
             --context $(kubectl config current-context --kubeconfig "$kubeconfig_path") \
             --omit-namespaces=<namespace-name-for-ignore>
-    |Type|Description|
-    |-----|------|
-    |kubeconfig_path|Adding Path variable for passing the kubeconfig file for cluster|
-    |--provider|Halyard Kubernetes provider version(Current- v2)|
-    |--kubeconfig-file|Path for kubernetes file for pointing to cluster|
-    |-- omit-namespaces|Exclude namespaces which you dont want to include in spinnaker deployment|
+        |Type|Description|
+        |-----|------|
+        |kubeconfig_path|Adding Path variable for passing the kubeconfig file for cluster|
+        |--provider|Halyard Kubernetes provider version(Current- v2)|
+        |--kubeconfig-file|Path for kubernetes file for pointing to cluster|
+        |-- omit-namespaces|Exclude namespaces which you dont want to include in spinnaker deployment|
     
 **Note :-** <br/>
       1) You can add multiple clusters for deployment from spinnaker (Target clusters) <br />
