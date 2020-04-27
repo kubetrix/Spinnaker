@@ -20,7 +20,7 @@ This section describes how to install and set up Spinnaker so that it can be con
  10. [Enable Helm Support](#spin-helm)
  11. [Enable Canary Deployment](#spin-canary)
  12. [Enable Stats for Tool Usage metrics to share logs with spinnaker team](#spin-stats)
- 13. Enable External Azure Redis with data retention
+ 13. [Enable External Azure Redis with data retention](#spin-redis)
  14. Add Security
       - Basic SSL Configuration
       - Oauth
@@ -279,6 +279,37 @@ If enabled, Spinnaker collects data about how the tool is being used. This data 
          hal config artifact helm enable
   
 Note:- If you don't want to share any logs of execution with spinnaker, then please disable this.
+
+### Enable External Redis
+
+- Make sure Spinnaker is already deployed, if not then please deploy without adding redis configuration because spinnaker will fail in intial deployment with external redis (Azure)
+
+     - 	Add Redis config file i.e. redis.yml in “spinnaker/default/service-settings/redis.yml”
+              
+              Redis.yml
+                 overrideBaseUrl: redis://:password@host:port
+                 skipLifeCycleManagement: true
+     
+**Note:-**
+1) Deploy spinnaker/Generate halyard config(hal config generate) after adding above configuration, donät apply all below mentioned    configuration together, External Redis will not work with all configuration together as url will overwrite.
+
+2) After generation please check spinnaker.yml file present under "default/staging/spinnaker.yml". Search for redis and check the above mentioned configuration added there correctly.
+    
+- Start deployment and wait for few minutes you will see gate pod is failing but redis is up and running.
+-	Now for removing gate pod failure issue, Please add below file.
+  
+    - Add gate-local.yml file at “spinnaker/ default/profiles/gate-local.yaml”
+
+                      Gate-local.yml
+                            redis:
+                              configuration:
+                                secure: true
+
+- Do the deployment and validate, redis and now all pods are working fine as well
+- 	Now set the retention period for pipeline execution logs.
+     
+     https://www.spinnaker.io/setup/productionize/caching/configure-redis-usage/
+
 
  ### Distribute Spinnaker deployment <a name="spin-distributed"></a>
    Changing deployment type to distributed i.e.Deploying Spinnaker with one server group per microservice, and a single shared Redis   
