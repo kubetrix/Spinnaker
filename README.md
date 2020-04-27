@@ -15,11 +15,11 @@ This section describes how to install and set up Spinnaker so that it can be con
  4. [Docker Registry Account Addition to Spinnaker](#spin-docker-registry)
  5. [Gitlab Account Addition to Spinnaker for Pull and Push to Repo](#spin-gitlab)
  6. [Jenkins Account Addition to Spinnaker](#spin-jenkins)
- 7. Add Storage Account to Spinnaker for Pipeline configuration
- 9. Enable slack notification channel
- 10. Enable Helm Support
- 11. Enable Canary Deployment
- 12. Enable Stats
+ 7. [Add Storage Account to Spinnaker for Pipeline configuration](#spin-storageaccount)
+ 9. [Enable slack notification channel](#spin-slack)
+ 10. [Enable Helm Support](#spin-helm)
+ 11. [Enable Canary Deployment](#spin-canary)
+ 12. [Enable Stats](#spin-stats)
  13. Enable External Azure Redis with data retention
  14. Add Security
       - Basic SSL Configuration
@@ -219,13 +219,73 @@ This is required for viewning and managing Jenkins CI Master Configuration for S
    |--password|Jenkins Password|
    |--csrf|Negotiate Jenkins Token|
 
+### Add Storage Account <a name="spin-storageaccount"></a>
+
+For Storing all pipeline configuration we need to setup some storage account.
+
+In this example I am setting azure(azs) storage account.
+   - For Azure Storage Account Creation
+        Storage Account - https://docs.microsoft.com/en-us/azure/storage/common/storage-account-create?toc=%2Fazure%2Fstorage%2Fblobs%2Ftoc.json&tabs=azure-portal
+        Container Creation - https://docs.microsoft.com/en-us/azure/storage/blobs/storage-blob-container-create
+        
+   - Enable Storage account 'azs' and add azs account details. 
+        
+         hal config storage edit --type azs
+         
+         hal config storage azs edit --storage-account-name <account-name> --storage-account-key <storage-account-key> --storage-container-name <storageaccount-container-name>
+         
+     |Parameters|Description|
+     |----------|-----------|
+     |--type|Setting Storage account type to Azure(azs)|
+     |account-name|Azure Storage Account Name|
+     |storage-account-key|Storage Account Key (Password)|
+     |storageaccount-container-name|Storage account container name, which is created for storage|
+     
+ Note:- Never use Redis for Configuration Storage, not recommended by Spinnaker. 
    
+### Add Slack Notification channel <a name="spin-slack"></a>
+
+it's required for pipeline execution notification.(Good to setup for Pipeline Failure).
+
+  - Enable Slack channel and add configuration
+  
+            hal config notification slack enable
+
+            hal config notification slack edit --bot-name spinnaker-slack-bot --token ***********
+
+    |Parameters|Description|
+    |----------|------------|
+    |--bot-name|Slack Bot Name|
+    |--token|Add Slack token|
+    
+  Note:- Email based notification is enabled by default.
+
+### Enable Helm Charts support <a name="spin-helm"></a>
  
+  -  Enable Helm chart support
+      
+         hal config artifact helm enable
+
+### Enable Canary deployment support <a name="spin-canary"></a>
+
+  - Enable Canary deployment
+    
+        hal config canary enable
+
+### Enable Stats for Tool Usage metrics to share logs with spinnaker team
+
+If enabled, Spinnaker collects data about how the tool is being used. This data is anonymized (before being sent across the internet) and aggregated
+
+         hal config artifact helm enable
+  
+Note:- If you don't want to share any logs of execution with spinnaker, then please disable this.
+
  ### Distribute Spinnaker deployment <a name="spin-distributed"></a>
    Changing deployment type to distributed i.e.Deploying Spinnaker with one server group per microservice, and a single shared Redis   
 
             hal config deploy edit --type distributed --account-name
+                        
    |Type | Distributed |
-   |-----|-----|
+   |-----|-------------|
    |--version| Set Deployment Type |
    |--account-name| Spinnaker account name|
