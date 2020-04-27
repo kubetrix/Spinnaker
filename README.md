@@ -286,9 +286,10 @@ Note:- If you don't want to share any logs of execution with spinnaker, then ple
 
      - 	Add Redis config file i.e. redis.yml in “spinnaker/default/service-settings/redis.yml”
               
-              Redis.yml
-                 overrideBaseUrl: redis://:password@host:port
-                 skipLifeCycleManagement: true
+           Redis.yml
+              
+              overrideBaseUrl: redis://:password@host:port
+              skipLifeCycleManagement: true
      
 **Note:-**
 1) Deploy spinnaker/Generate halyard config(hal config generate) after adding above configuration, donät apply all below mentioned    configuration together, External Redis will not work with all configuration together as url will overwrite.
@@ -300,10 +301,11 @@ Note:- If you don't want to share any logs of execution with spinnaker, then ple
   
     - Add gate-local.yml file at “spinnaker/ default/profiles/gate-local.yaml”
 
-                      Gate-local.yml
-                            redis:
-                              configuration:
-                                secure: true
+        Gate-local.yml
+                
+          redis:
+            configuration:
+              secure: true
 
 - Do the deployment and validate, redis and now all pods are working fine as well
 - 	Now set the retention period for pipeline execution logs. 
