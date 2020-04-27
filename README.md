@@ -19,7 +19,7 @@ This section describes how to install and set up Spinnaker so that it can be con
  9. [Enable slack notification channel](#spin-slack)
  10. [Enable Helm Support](#spin-helm)
  11. [Enable Canary Deployment](#spin-canary)
- 12. [Enable Stats](#spin-stats)
+ 12. [Enable Stats for Tool Usage metrics to share logs with spinnaker team](#spin-stats)
  13. Enable External Azure Redis with data retention
  14. Add Security
       - Basic SSL Configuration
@@ -272,7 +272,7 @@ it's required for pipeline execution notification.(Good to setup for Pipeline Fa
     
         hal config canary enable
 
-### Enable Stats for Tool Usage metrics to share logs with spinnaker team
+### Enable Stats for Tool Usage metrics to share logs with spinnaker team <a name="spin-stats"></a>
 
 If enabled, Spinnaker collects data about how the tool is being used. This data is anonymized (before being sent across the internet) and aggregated
 
