@@ -21,7 +21,7 @@ This section describes how to install and set up Spinnaker so that it can be con
  11. [Enable Canary Deployment](#spin-canary)
  12. [Enable Stats for Tool Usage metrics to share logs with spinnaker team](#spin-stats)
  13. [Enable External Azure Redis with data retention](#spin-redis)
- 14. Add Security
+ 14. [Secure Spinnaker](#spin-ssl)
       - Basic SSL Configuration
       - Oauth
       - SAML
@@ -280,7 +280,7 @@ If enabled, Spinnaker collects data about how the tool is being used. This data 
   
 Note:- If you don't want to share any logs of execution with spinnaker, then please disable this.
 
-### Enable External Redis
+### Enable External Redis <a name="spin-redis"></a>
 
 - Make sure Spinnaker is already deployed, if not then please deploy without adding redis configuration because spinnaker will fail in intial deployment with external redis (Azure)
 
@@ -306,9 +306,18 @@ Note:- If you don't want to share any logs of execution with spinnaker, then ple
                                 secure: true
 
 - Do the deployment and validate, redis and now all pods are working fine as well
-- 	Now set the retention period for pipeline execution logs.
+- 	Now set the retention period for pipeline execution logs. 
      
      https://www.spinnaker.io/setup/productionize/caching/configure-redis-usage/
+
+Note:- It is required for logs cleanup as you never prefer to keep data for long and with azure redis data storage will be very costly as well.
+
+
+### Secure Spinnaker <a name="spin-ssl"></a>
+
+Spinnaker has multiple options for both authentication and authorization. Instead of reinventing yet-another-login system, Spinnaker hooks into a login system your organization probably already has, such as OAuth 2.0, SAML, or LDAP.
+
+**In this tutorial we are implementing Oauth 2.0, SAML security with organization secured domain certificate**
 
 
  ### Distribute Spinnaker deployment <a name="spin-distributed"></a>
